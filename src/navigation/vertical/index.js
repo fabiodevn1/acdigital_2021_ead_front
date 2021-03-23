@@ -37,9 +37,13 @@ import chartsAndMaps from './charts-and-maps'
 import uiElements from './ui-elements'
 import formAndTable from './forms-and-table'
 import AlunosCursos from './aluno/cursos'
+import AdminAdmin from './admin/admin'
+import ProfProf from './professor/professores'
 
 // Array of sections
 export default [
+  ...AdminAdmin,
+  ...ProfProf,
   ...AlunosCursos,
   // ...dashboard,
   ...appsAndPages,
