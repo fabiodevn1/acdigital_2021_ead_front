@@ -10,19 +10,25 @@ export default [
   },
   {
     icon: 'HomeIcon',
+    route: 'app-admin-categorias',
+    title: 'categorias2',
+    action: 'admin',
+  },
+  {
+    icon: 'BookIcon',
     route: 'app-admin-cursos',
     title: 'cursos2',
     action: 'admin',
   },
   {
     title: 'alunos2',
-    icon: 'EditIcon',
+    icon: 'UsersIcon',
     route: 'app-admin-alunos',
     action: 'admin',
   },
   {
     title: 'suporte2',
-    icon: 'EditIcon',
+    icon: 'HelpCircleIcon',
     route: 'app-admin-suporte',
     action: 'admin',
   },
