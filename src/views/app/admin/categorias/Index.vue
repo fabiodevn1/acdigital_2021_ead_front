@@ -9,6 +9,31 @@
           class="invoice-preview-card"
         >
           <b-card-body>
+            <b-row>
+              <b-col
+                cols="12"
+                xl="9"
+                md="8"
+              >
+                <h2>Lista de Categorias</h2>
+              </b-col>
+              <b-col
+                cols="12"
+                xl="3"
+                md="4"
+              >
+                <b-button
+                  v-b-toggle.sidebar-invoice-add-new-customer
+                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                  variant="outline-primary"
+                  class="mb-75"
+
+                  fixed
+                  block
+                > Nova Categoria
+                </b-button>
+              </b-col>
+            </b-row>
             <data-table
               :data="data"
               :columns="columns"
@@ -35,6 +60,37 @@
                       :comp="column.component"
                       :classes="column.classes"
                     />
+                    <slot v-if="column.label === 'Ações'">
+                      <!--                      <b-button-->
+                      <!--                        v-b-toggle.sidebar-invoice-add-new-customer-->
+                      <!--                        v-ripple.400="'rgba(113, 102, 240, 0.15)'"-->
+                      <!--                        variant="outline-primary"-->
+                      <!--                        size="sm"-->
+                      <!--                        pill-->
+
+                      <!--                        @click="editItem(item)"-->
+                      <!--                      > Gerenciar Seção-->
+                      <!--                      </b-button>-->
+                      <b-button
+                        v-b-toggle.sidebar-invoice-add-new-customer
+                        v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                        variant="outline-primary"
+                        size="sm"
+                        class="btn-icon rounded-circle"
+                        @click="EditarDados(item)"
+                      >
+                        <feather-icon icon="EditIcon" />
+                      </b-button>
+                      <b-button
+                        v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                        variant="outline-danger"
+                        size="sm"
+                        class="btn-icon rounded-circle"
+                        @click="DeletarDados(item)"
+                      >
+                        <feather-icon icon="Trash2Icon" />
+                      </b-button>
+                    </slot>
                   </td>
                 </tr>
               </tbody>
@@ -59,14 +115,14 @@ export default {
 
   data() {
     return {
-      url: 'categorias',
+      url: 'admin/categorias',
       data: {},
       dadositem: {},
       tableProps: {
         search: '',
         length: 10,
         column: 'id',
-        dir: 'desc',
+        dir: 'asc',
       },
       columns: [
         {
@@ -76,19 +132,17 @@ export default {
         },
         {
           label: 'Nome',
-          name: 'nome',
+          name: 'titulo',
           orderable: true,
         },
         {
-          label: 'Telefone',
-          orderable: true,
-        },
-        {
-          label: 'Conheceu',
+          label: 'Descrição',
+          name: 'descricao',
           orderable: true,
         },
         {
           label: 'Status',
+          name: 'status',
           orderable: true,
         },
         {
@@ -105,6 +159,7 @@ export default {
     BuscarDados(url = this.url, options = this.tableProps) {
       this.$http.get(url, { params: options }).then(resp => {
         this.data = resp.data
+        console.log(this.data)
       })
     },
     reloadTable(tableProps) {
