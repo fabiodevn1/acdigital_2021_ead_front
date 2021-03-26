@@ -76,7 +76,12 @@ Vue.filter('DataBr', valor => {
 })
 
 // register directive v-money and component <money>
-Vue.use(money, { precision: 2 })
+Vue.use(money, {
+  decimal: ',',
+  thousands: '.',
+  masked: false,
+  precision: 2,
+})
 
 // BSV Plugin Registration
 Vue.use(ToastPlugin)

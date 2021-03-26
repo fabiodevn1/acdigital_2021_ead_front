@@ -30,6 +30,7 @@
 
                   fixed
                   block
+                  @click="editDados('')"
                 > Novo Curso
                 </b-button>
               </b-col>
@@ -77,7 +78,7 @@
                         variant="outline-primary"
                         size="sm"
                         class="btn-icon rounded-circle"
-                        @click="EditarDados(item)"
+                        @click="editDados(item)"
                       >
                         <feather-icon icon="EditIcon" />
                       </b-button>
@@ -166,6 +167,13 @@ export default {
     this.BuscarDados(this.url)
   },
   methods: {
+    editDados(item) {
+      localStorage.setItem('cont', JSON.stringify(item))
+      this.$store.state.categoria = item
+      this.$router.push({
+        name: 'app-admin-dados-cursos',
+      })
+    },
     BuscarDados(url = this.url, options = this.tableProps) {
       this.$http.get(url, { params: options }).then(resp => {
         this.data = resp.data

@@ -1,6 +1,7 @@
 <template>
   <section>
     <b-card>
+      <!--  TITULO DA PAGINA    -->
       <b-row>
         <b-col>
           <h2>
@@ -8,70 +9,85 @@
           </h2>
         </b-col>
       </b-row>
+
+      <!------------- NOME DO CURSO--------------->
       <b-row class="mt-1">
         <b-col>
           <b-form-group>
-            <label label-for="cursos">Titulo do Curso</label>
+            <label
+              label-for="cursos"
+            >Titulo do Curso</label>
             <b-form-input
               id="cursos"
-              v-model="titulo"
+              v-model="nomeCurso"
               placeholder="Titulo do Curso"
             />
           </b-form-group>
         </b-col>
       </b-row>
+
+      <!------------- DESCRIÇÃO DO CURSO--------------->
       <b-row>
         <b-col>
           <b-form-group>
-            <label label-for="descrição">Descrição do Curso</label>
+            <label
+              label-for="descrição"
+            >Descrição do Curso</label>
             <b-form-textarea
               id="descrição"
-              v-model="descricao"
+              v-model="descricaoCurso"
               placeholder="Descrição da Categoria"
               rows="3"
             />
           </b-form-group>
         </b-col>
       </b-row>
+
       <b-row>
+        <!------------- IMAGEM DESTAQUE--------------->
         <b-col md="5">
           <b-form-group>
             <label>Imagem de Destaque</label>
             <b-form-file
-              v-model="destaque"
+              v-model="imagemDestaque"
               placeholder="Escolha um arquivo ou solte-o aqui ..."
               drop-placeholder="Solte o arquivo aqui ..."
             />
           </b-form-group>
         </b-col>
+
+        <!------------- CATEGORIA--------------->
         <b-col md="4">
           <b-form-group>
             <label>Selecione a Categoria</label>
             <v-select
-              v-model="categorias"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+              v-model="categoriasSelecionadas"
               placeholder="Selecione a Categoria"
               label="text"
               multiple
-              :options="ocategorias"
+              :options="opcoesCategorias"
             />
           </b-form-group>
         </b-col>
+
+        <!-------------TAGS--------------->
         <b-col md="3">
           <b-form-group>
             <label>Selecione as Tags</label>
             <v-select
-              v-model="tags"
+              v-model="tagsSelecionadas"
               :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
               placeholder="Selecione as Tags"
               label="text"
               multiple
-              :options="otags"
+              :options="opcoesTags"
             />
           </b-form-group>
         </b-col>
       </b-row>
+
       <b-row>
+        <!------------- VALOR DO CURSO--------------->
         <b-col md="4">
           <b-form-group
             label="Valor do Curso"
@@ -83,7 +99,7 @@
                   <feather-icon icon="DollarSignIcon" />
                 </b-input-group-prepend>
                 <b-form-input
-                  v-model="valor_curso"
+                  v-model="valorCurso"
                   v-money="money"
                   placeholder="Saldo Inicial"
                 />
@@ -91,6 +107,8 @@
             </div>
           </b-form-group>
         </b-col>
+
+        <!------------- VALOR PROMOCIONAL--------------->
         <b-col md="4">
           <b-form-group
             label="Valor Promocional do Curso"
@@ -102,35 +120,35 @@
                   <feather-icon icon="DollarSignIcon" />
                 </b-input-group-prepend>
                 <b-form-input
-                  v-model="promo_curso"
+                  v-model="valorPromocional"
                   v-money="money"
                 />
               </b-input-group>
             </div>
           </b-form-group>
         </b-col>
+
+        <!-------------DATA PROMOÇÃO--------------->
         <b-col md="4">
           <b-form-group>
             <label>Selecione o Peréodo da Promoção</label>
             <b-form-datepicker
               id="example-datepicker"
-              v-model="data_promo"
               class="mb-1"
             />
           </b-form-group>
         </b-col>
-
       </b-row>
+
+      <!------------- PRIVADO--------------->
       <b-row>
         <b-col md="6">
           <b-form-group>
             <label>Selecione o Status</label>
             <v-select
-              v-model="status"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+              v-model="statusCursoSelecionado"
               placeholder="Selecione o Status"
               label="text"
-              :options="ostatus"
             />
           </b-form-group>
         </b-col>
@@ -138,23 +156,38 @@
           <b-form-group>
             <label>Selecione Privado</label>
             <v-select
-              v-model="privado"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+              v-model="seCursoPrivado"
               placeholder="Selecione Privado"
               label="text"
-              :options="oprivado"
+              :options="opcoesCursoPrivado"
             />
           </b-form-group>
         </b-col>
       </b-row>
+
       <b-row>
-        <b-col class="mt-1">
+        <b-col
+          md="8"
+          class="mt-1"
+        >
           <b-button
             variant="gradient-success"
             block
             @click="SalvarCurso"
           >
             Cadastrar Curso
+          </b-button>
+        </b-col>
+        <b-col
+          md="4"
+          class="mt-1"
+        >
+          <b-button
+            variant="gradient-warning"
+            block
+            @click="ZerarCampos"
+          >
+            Limpar
           </b-button>
         </b-col>
       </b-row>
@@ -166,7 +199,7 @@
 import vSelect from 'vue-select'
 
 export default {
-  name: 'DadosCategorias',
+  name: 'DadosCursos',
   components: {
     vSelect,
   },
@@ -174,90 +207,60 @@ export default {
   },
   data() {
     return {
-      titulo: '',
-      descricao: '',
-      destaque: '',
-      categorias: '',
-      tags: '',
-      valor_curso: '',
-      promo_curso: '',
-      data_promo: '',
-      status: '',
-      privado: '',
-
-      money: {
-        decimal: ',',
-        thousands: '.',
-        prefix: 'R$ ',
-        suffix: '',
-        precision: 2,
-        masked: false,
-      },
-      dir: 'ltr',
-      ocategorias: [
-        { value: null, text: 'Please select some item' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Default Selected Option' },
-        { value: 'c', text: 'This is another option' },
-        { value: 'd', text: 'This one is disabled', disabled: true },
-      ],
-      otags: [
-        { value: null, text: 'Please select some item' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Default Selected Option' },
-        { value: 'c', text: 'This is another option' },
-        { value: 'd', text: 'This one is disabled', disabled: true },
-      ],
-      oprivado: [
-        { value: '0', text: 'Rascunho' },
-        { value: '1', text: 'Gratuíto' },
-        { value: '2', text: 'Privado' },
-      ],
-      ostatus: [
-        { value: '0', text: 'Inativo' },
-        { value: '1', text: 'Ativo' },
-        { value: '2', text: 'Rascunho' },
-      ],
+      id: null,
+      nomeCurso: null,
+      descricaoCurso: null,
+      imagemDestaque: null,
+      categoriasSelecionadas: null,
+      tagsSelecionadas: null,
+      money: [],
+      valorCurso: null,
+      valorPromocional: null,
+      statusCursoSelecionado: null,
+      seCursoPrivado: null,
+      //= ========================================================================
+      opcoesTags: [{ value: null, text: 'Por Favor Selecione' }],
+      opcoesStatusCurso: [{ value: null, text: 'Por Favor Selecione' }],
+      opcoesCursoPrivado: [{ value: null, text: 'Por Favor Selecione' }],
+      opcoesCategorias: [{ value: null, text: 'Por Favor Selecione' }],
     }
   },
   methods: {
-    SalvarCurso() {
+    ZerarCampos() {
       const obj = {
-        titulo: this.titulo,
-        descricao: this.descricao,
-        destaque: this.destaque,
-        categorias: this.categorias,
-        tags: this.tags,
-        valor_curso: this.valor_curso,
-        promo_curso: this.promo_curso,
-        data_promo: this.data_promo,
-        status: this.status,
-        privado: this.privado,
+        id: this.id,
+        titulo: this.nomeCurso,
+        descricao: this.descricaoCurso,
+        imagem: this.imagemDestaque,
+        categorias: this.categoriasSelecionadas,
+        tags: this.tagsSelecionadas,
+        valor: this.valorCurso,
+        valor_promo: this.valorPromocional,
+        status: this.statusCursoSelecionado,
+        privado: this.seCursoPrivado,
       }
-      this.produto = ''
-      this.titulo = ''
-      this.descricao = ''
-      this.destaque = ''
-      this.categorias = ''
-      this.tags = ''
-      this.valor_curso = ''
-      this.promo_curso = ''
-      this.data_promo = ''
-      this.status = ''
-      this.privado = ''
-      console.log(obj)
+      this.nomeCurso = null
+      this.descricaoCurso = null
+      this.imagemDestaque = null
+      this.categoriasSelecionadas = null
+      this.tagsSelecionadas = null
+      this.valorCurso = null
+      this.valorPromocional = null
+      this.statusCursoSelecionado = null
+      this.seCursoPrivado = null
+      return obj
+    },
+    SalvarCurso() {
+      const obj = this.ZerarCampos()
       if (this.id === null) {
-        // console.log(obj)
-        this.$http.post('admin/produtos/criar', obj).then(resp => {
-          this.data = resp.data
-          this.$emit('reloadt')
+        this.$http.post('admin/cursos', obj).then(resp => {
+          console.log(resp.data)
         })
         return
       }
-      console.log('passou')
-      this.$http.put(`admin/produtos/editar/${this.id}`, obj).then(resp => {
+      // console.log('passou')
+      this.$http.put(`admin/cursos/${this.id}`, obj).then(resp => {
         this.data = resp.data
-        this.$emit('reloadt')
       })
     },
   },
