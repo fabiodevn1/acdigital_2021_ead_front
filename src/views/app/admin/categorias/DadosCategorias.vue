@@ -59,7 +59,6 @@
             <label>Selecione o Status</label>
             <v-select
               v-model="status"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
               placeholder="Selecione o Status"
               label="text"
               :options="ostatus"
@@ -132,7 +131,7 @@ export default {
         return
       }
 
-      this.$http.put(`admin/categorias/${this.id}`, obj).then(resp => {
+      this.$http.put(`admin/categorias${this.id}`, obj).then(resp => {
         this.data = resp.data
         this.$emit('reloadt')
         console.log('editar')
