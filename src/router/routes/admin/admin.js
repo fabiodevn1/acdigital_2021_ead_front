@@ -29,6 +29,11 @@ export default [
     component: () => import('@/views/app/admin/cursos/Index.vue'),
   },
   {
+    path: '/admin/dados/cursos',
+    name: 'app-admin-dados-cursos',
+    component: () => import('@/views/app/admin/cursos/DadosCursos.vue'),
+  },
+  {
     path: '/admin/alunos',
     name: 'app-admin-alunos',
     component: () => import('@/views/app/admin/alunos/Index.vue'),

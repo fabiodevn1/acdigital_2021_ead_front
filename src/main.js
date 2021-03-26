@@ -12,6 +12,7 @@ import { VueMaskFilter } from 'v-mask'
 import { Datetime } from 'vue-datetime'
 import Multiselect from 'vue-multiselect'
 
+import money from 'v-money'
 import VueGoogleCharts from 'vue-google-charts'
 import router from './router'
 import store from './store'
@@ -75,7 +76,7 @@ Vue.filter('DataBr', valor => {
 })
 
 // register directive v-money and component <money>
-// Vue.use(money, { precision: 2 })
+Vue.use(money, { precision: 2 })
 
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
