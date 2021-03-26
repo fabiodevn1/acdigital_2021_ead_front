@@ -38,7 +38,6 @@
           <b-form-group>
             <label>Imagem de Destaque</label>
             <b-form-file
-              v-model="destaque"
               placeholder="Escolha um arquivo ou solte-o aqui ..."
               drop-placeholder="Solte o arquivo aqui ..."
             />
@@ -48,7 +47,6 @@
           <b-form-group>
             <label>Imagem de Capa</label>
             <b-form-file
-              v-model="capa"
               placeholder="Escolha um arquivo ou solte-o aqui ..."
               drop-placeholder="Solte o arquivo aqui ..."
             />
@@ -68,24 +66,14 @@
             />
           </b-form-group>
         </b-col>
-        <b-col md="6">
-          <b-form-group>
-            <label>Selecione a Cor</label>
-            <v-select
-              v-model="cor"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              placeholder="Selecione a Cor"
-              label="text"
-              :options="ocor"
-            />
-          </b-form-group>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col class="mt-1">
+        <b-col
+          md="6"
+          class="mt-2"
+        >
           <b-button
             variant="gradient-success"
             block
+            @click="Salvar_Dados"
           >
             Salvar Categoria
           </b-button>
@@ -113,20 +101,43 @@ export default {
       status: '',
       cor: '',
       ostatus: [
-        { value: null, text: 'Please select some item' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Default Selected Option' },
-        { value: 'c', text: 'This is another option' },
-        { value: 'd', text: 'This one is disabled', disabled: true },
-      ],
-      ocor: [
-        { value: null, text: 'Please select some item' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Default Selected Option' },
-        { value: 'c', text: 'This is another option' },
-        { value: 'd', text: 'This one is disabled', disabled: true },
+        { value: null, text: 'Por Favor Selecione' },
+        { value: 0, text: 'Desativado' },
+        { value: 1, text: 'Ativo' },
+        { value: 2, text: 'Lixeira' },
       ],
     }
+  },
+  mounted() {
+    const Categoria = this.$store.state.categoria
+    if (Categoria) {
+      this.id = Categoria.id
+      this.categoria = Categoria.titulo
+      this.descricao = Categoria.descricao
+    }
+  },
+  methods: {
+    Salvar_Dados() {
+      const obj = {
+        id: this.id,
+        titulo: this.categoria,
+        descricao: this.descricao,
+        status: this.status.value,
+      }
+      console.log(obj)
+      if (this.id === undefined) {
+        this.$http.post('admin/categorias', obj).then(resp => {
+          this.data = resp.data
+        })
+        return
+      }
+
+      this.$http.put(`admin/categorias/${this.id}`, obj).then(resp => {
+        this.data = resp.data
+        this.$emit('reloadt')
+        console.log('editar')
+      })
+    },
   },
 }
 </script>

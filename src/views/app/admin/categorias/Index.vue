@@ -62,16 +62,6 @@
                       :classes="column.classes"
                     />
                     <slot v-if="column.label === 'Ações'">
-                      <!--                      <b-button-->
-                      <!--                        v-b-toggle.sidebar-invoice-add-new-customer-->
-                      <!--                        v-ripple.400="'rgba(113, 102, 240, 0.15)'"-->
-                      <!--                        variant="outline-primary"-->
-                      <!--                        size="sm"-->
-                      <!--                        pill-->
-
-                      <!--                        @click="editItem(item)"-->
-                      <!--                      > Gerenciar Seção-->
-                      <!--                      </b-button>-->
                       <b-button
                         v-b-toggle.sidebar-invoice-add-new-customer
                         v-ripple.400="'rgba(113, 102, 240, 0.15)'"
@@ -159,6 +149,7 @@ export default {
   methods: {
     editDados(item) {
       localStorage.setItem('cont', JSON.stringify(item))
+      this.$store.state.categoria = item
       this.$router.push({
         name: 'app-admin-dados-categorias',
       })
@@ -167,7 +158,6 @@ export default {
     BuscarDados(url = this.url, options = this.tableProps) {
       this.$http.get(url, { params: options }).then(resp => {
         this.data = resp.data
-        console.log(this.data)
       })
     },
     reloadTable(tableProps) {
