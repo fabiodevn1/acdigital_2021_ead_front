@@ -15,7 +15,7 @@
                 xl="9"
                 md="8"
               >
-                <h2>Lista de Suportes</h2>
+                <h2>Lista de Certificados</h2>
               </b-col>
               <b-col
                 cols="12"
@@ -30,7 +30,7 @@
 
                   fixed
                   block
-                > Novo Suporte
+                > Novo Certificado
                 </b-button>
               </b-col>
             </b-row>
