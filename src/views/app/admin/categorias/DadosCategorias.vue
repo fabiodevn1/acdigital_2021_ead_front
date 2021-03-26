@@ -38,6 +38,7 @@
           <b-form-group>
             <label>Imagem de Destaque</label>
             <b-form-file
+              v-model="destaque"
               placeholder="Escolha um arquivo ou solte-o aqui ..."
               drop-placeholder="Solte o arquivo aqui ..."
             />
@@ -47,6 +48,7 @@
           <b-form-group>
             <label>Imagem de Capa</label>
             <b-form-file
+              v-model="capa"
               placeholder="Escolha um arquivo ou solte-o aqui ..."
               drop-placeholder="Solte o arquivo aqui ..."
             />
@@ -104,7 +106,12 @@ export default {
   data() {
     return {
       dir: 'ltr',
+      categoria: '',
+      descricao: '',
+      destaque: '',
+      capa: '',
       status: '',
+      cor: '',
       ostatus: [
         { value: null, text: 'Please select some item' },
         { value: 'a', text: 'This is First option' },
@@ -112,7 +119,6 @@ export default {
         { value: 'c', text: 'This is another option' },
         { value: 'd', text: 'This one is disabled', disabled: true },
       ],
-      cor: '',
       ocor: [
         { value: null, text: 'Please select some item' },
         { value: 'a', text: 'This is First option' },

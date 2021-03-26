@@ -5,6 +5,7 @@ export default [
     name: 'app-admin-inicio',
     component: () => import('@/views/app/admin/inicio/Index.vue'),
   },
+
   // ########################################################## //
   // ################        CATEGORIAS        ################ //
   // ########################################################## //
@@ -18,6 +19,10 @@ export default [
     name: 'app-admin-dados-categorias',
     component: () => import('@/views/app/admin/categorias/DadosCategorias.vue'),
   },
+
+  // ########################################################## //
+  // #################          CURSO          ################ //
+  // ########################################################## //
   {
     path: '/admin/cursos',
     name: 'app-admin-cursos',
