@@ -23,6 +23,7 @@ export default [
   // ########################################################## //
   // #################          CURSO          ################ //
   // ########################################################## //
+
   {
     path: '/admin/cursos',
     name: 'app-admin-cursos',
@@ -33,10 +34,20 @@ export default [
     name: 'app-admin-dados-cursos',
     component: () => import('@/views/app/admin/cursos/DadosCursos.vue'),
   },
+
+  // ########################################################## //
+  // #################          ALUNOS          ################ //
+  // ########################################################## //
+
   {
     path: '/admin/alunos',
     name: 'app-admin-alunos',
     component: () => import('@/views/app/admin/alunos/Index.vue'),
+  },
+  {
+    path: '/admin/dados/alunos',
+    name: 'app-admin-alunos',
+    component: () => import('@/views/app/admin/alunos/DadosAluno.vue'),
   },
   {
     path: '/admin/suporte',
