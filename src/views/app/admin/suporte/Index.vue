@@ -15,7 +15,7 @@
                 xl="9"
                 md="8"
               >
-                <h2>Lista de Categorias</h2>
+                <h2>Lista de Suporte</h2>
               </b-col>
               <b-col
                 cols="12"
@@ -30,7 +30,7 @@
 
                   fixed
                   block
-                > Nova Categoria
+                > Novo Suporte
                 </b-button>
               </b-col>
             </b-row>
