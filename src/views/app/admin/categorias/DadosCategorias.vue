@@ -54,17 +54,39 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col>
+        <b-col md="6">
           <b-form-group>
-            <label>Imagem de Capa</label>
+            <label>Selecione o Status</label>
             <v-select
-              v-model="selected"
+              v-model="status"
               :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              multiple
-              label="title"
-              :options="option"
+              placeholder="Selecione o Status"
+              label="text"
+              :options="ostatus"
             />
           </b-form-group>
+        </b-col>
+        <b-col md="6">
+          <b-form-group>
+            <label>Selecione a Cor</label>
+            <v-select
+              v-model="cor"
+              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+              placeholder="Selecione a Cor"
+              label="text"
+              :options="ocor"
+            />
+          </b-form-group>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col class="mt-1">
+          <b-button
+            variant="gradient-success"
+            block
+          >
+            Salvar Categoria
+          </b-button>
         </b-col>
       </b-row>
     </b-card>
@@ -72,8 +94,34 @@
 </template>
 
 <script>
+import vSelect from 'vue-select'
+
 export default {
   name: 'DadosCategorias',
+  components: {
+    vSelect,
+  },
+  data() {
+    return {
+      dir: 'ltr',
+      status: '',
+      ostatus: [
+        { value: null, text: 'Please select some item' },
+        { value: 'a', text: 'This is First option' },
+        { value: 'b', text: 'Default Selected Option' },
+        { value: 'c', text: 'This is another option' },
+        { value: 'd', text: 'This one is disabled', disabled: true },
+      ],
+      cor: '',
+      ocor: [
+        { value: null, text: 'Please select some item' },
+        { value: 'a', text: 'This is First option' },
+        { value: 'b', text: 'Default Selected Option' },
+        { value: 'c', text: 'This is another option' },
+        { value: 'd', text: 'This one is disabled', disabled: true },
+      ],
+    }
+  },
 }
 </script>
 
