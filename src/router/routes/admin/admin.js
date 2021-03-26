@@ -1,13 +1,22 @@
 export default [
+  // Inicio
   {
     path: '/admin/inicio',
     name: 'app-admin-inicio',
     component: () => import('@/views/app/admin/inicio/Index.vue'),
   },
+  // ########################################################## //
+  // ################        CATEGORIAS        ################ //
+  // ########################################################## //
   {
     path: '/admin/categorias',
     name: 'app-admin-categorias',
     component: () => import('@/views/app/admin/categorias/Index.vue'),
+  },
+  {
+    path: '/admin/dados/categorias',
+    name: 'app-admin-dados-categorias',
+    component: () => import('@/views/app/admin/categorias/DadosCategorias.vue'),
   },
   {
     path: '/admin/cursos',
