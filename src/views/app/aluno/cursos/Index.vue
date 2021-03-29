@@ -1,27 +1,201 @@
 <template>
-  <section id="dashboard-ecommerce">
-    <b-row class="match-height">
-      <b-col>
-        PÁGINA EM CONSTRUÇÃO
-      </b-col>
-    </b-row>
-  </section>
+  <div style="height: inherit">
+
+    <!-- Overlay -->
+    <div />
+    <section>
+
+      <!-- card image top -->
+      <b-row>
+        <b-col
+          v-for="curso in todoscursos"
+          :key="curso.id"
+          md="4"
+        >
+          <b-card
+            :img-src="require('../../../../assets/images/banner/banner-27.jpg')"
+            img-alt="card img"
+            img-top
+            class="position-static"
+          >
+            <h2>{{ curso.titulo }}</h2>
+            <b-card-text> {{ curso.descricao | truncate(90) }}</b-card-text>
+            <b-card-text class="item-company">
+              Tags: <b-link class="ml-25">
+                {{ curso.tags }}
+              </b-link>
+            </b-card-text>
+            <b-row>
+              <b-col
+                md="6"
+                class="item-rating"
+              >
+                <ul class="unstyled-list list-inline">
+                  <li
+                    v-for="star in 5"
+                    :key="star"
+                    class="ratings-list-item"
+                    :class="{'ml-25': star-1}"
+                  >
+                    <feather-icon
+                      icon="StarIcon"
+                      size="16"
+                      :class="[{'fill-current': star <= curso.rating}, star <= curso.rating ? 'text-warning' : 'text-muted']"
+                    />
+                  </li>
+                </ul>
+              </b-col>
+              <b-col md="6">
+                <h6 class="item-price">
+                  R${{ curso.valor }}
+                </h6>
+              </b-col>
+            </b-row>
+            <b-button
+              variant="light"
+              block
+            >
+              COMPRAR CURSO
+            </b-button>
+          </b-card>
+        </b-col>
+      </b-row>
+
+    </section>
+  </div>
 </template>
 
 <script>
-import {
-  BRow, BCol,
-} from 'bootstrap-vue'
+import imgcurso from '../../../../assets/images/banner/banner-27.jpg'
 
 export default {
-  components: {
-
-    BRow,
-    BCol,
-
+  name: 'Index',
+  data() {
+    return {
+      imgcurso: '../../../../assets/images/banner/banner-27.jpg',
+      todoscursos: [
+        {
+          id: 1,
+          valor: '2500,00',
+          titulo: 'Curso de Marketing Digital',
+          descricao: 'Curabitur, arcu erat, accumsan, id imperdiet et, porttitor at sem. ltricies ligula sed, magna dictum porta.',
+          tags: 'Digital, Marketing',
+          estreals: '2',
+          imagem: imgcurso,
+          rating: 2,
+          slug: 'Digital, Marketing',
+          isInWishlist: '2',
+          isInCart: '3',
+        },
+        {
+          id: 2,
+          valor: '2500,00',
+          titulo: 'Curso de Marketing Digital',
+          descricao: 'Curabitur, arcu erat, accumsan, id imperdiet et, porttitor at sem. ltricies ligula sed, magna dictum porta.',
+          tags: 'Digital, Marketing',
+          estreals: '2',
+          imagem: imgcurso,
+          rating: 2,
+          slug: 'Digital, Marketing',
+          isInWishlist: '2',
+          isInCart: '3',
+        },
+        {
+          id: 3,
+          valor: '2500,00',
+          titulo: 'Curso de Marketing Digital',
+          descricao: 'Curabitur, arcu erat, accumsan, id imperdiet et, porttitor at sem. ltricies ligula sed, magna dictum porta.',
+          tags: 'Digital, Marketing',
+          estreals: '2',
+          imagem: imgcurso,
+          rating: 2,
+          slug: 'Digital, Marketing',
+          isInWishlist: '2',
+          isInCart: '3',
+        },
+        {
+          id: 4,
+          valor: '2500,00',
+          titulo: 'Curso de Marketing Digital',
+          descricao: 'Curabitur, arcu erat, accumsan, id imperdiet et, porttitor at sem. ltricies ligula sed, magna dictum porta.',
+          tags: 'Digital, Marketing',
+          estreals: '2',
+          imagem: imgcurso,
+          rating: 2,
+          slug: 'Digital, Marketing',
+          isInWishlist: '2',
+          isInCart: '3',
+        },
+        {
+          id: 5,
+          valor: '2500,00',
+          titulo: 'Curso de Marketing Digital',
+          descricao: 'Curabitur, arcu erat, accumsan, id imperdiet et, porttitor at sem. ltricies ligula sed, magna dictum porta.',
+          tags: 'Digital, Marketing',
+          estreals: '2',
+          imagem: imgcurso,
+          rating: 2,
+          slug: 'Digital, Marketing',
+          isInWishlist: '2',
+          isInCart: '3',
+        },
+        {
+          id: 6,
+          valor: '2500,00',
+          titulo: 'Curso de Marketing Digital',
+          descricao: 'Curabitur, arcu erat, accumsan, id imperdiet et, porttitor at sem. ltricies ligula sed, magna dictum porta.',
+          tags: 'Digital, Marketing',
+          estreals: '2',
+          imagem: imgcurso,
+          rating: 2,
+          slug: 'Digital, Marketing',
+          isInWishlist: '2',
+          isInCart: '3',
+        },
+        {
+          id: 7,
+          valor: '2500,00',
+          titulo: 'Curso de Marketing Digital',
+          descricao: 'Curabitur, arcu erat, accumsan, id imperdiet et, porttitor at sem. ltricies ligula sed, magna dictum porta.',
+          tags: 'Digital, Marketing',
+          estreals: '2',
+          imagem: imgcurso,
+          rating: 2,
+          slug: 'Digital, Marketing',
+          isInWishlist: '2',
+          isInCart: '3',
+        },
+        {
+          id: 8,
+          valor: '2500,00',
+          titulo: 'Curso de Marketing Digital',
+          descricao: 'Curabitur, arcu erat, accumsan, id imperdiet et, porttitor at sem. ltricies ligula sed, magna dictum porta.',
+          tags: 'Digital, Marketing',
+          estreals: '2',
+          imagem: imgcurso,
+          rating: 2,
+          slug: 'Digital, Marketing',
+          isInWishlist: '2',
+          isInCart: '3',
+        },
+        {
+          id: 9,
+          valor: '2500,00',
+          titulo: 'Curso de Marketing Digital',
+          descricao: 'Curabitur, arcu erat, accumsan, id imperdiet et, porttitor at sem. ltricies ligula sed, magna dictum porta.',
+          tags: 'Digital, Marketing',
+          estreals: '2',
+          imagem: imgcurso,
+          rating: 2,
+          slug: 'Digital, Marketing',
+          isInWishlist: '2',
+          isInCart: '3',
+        },
+      ],
+    }
   },
 }
 </script>
+<style>
 
-<style lang="scss">
 </style>

@@ -154,7 +154,6 @@ export default {
   },
   methods: {
     editDados(item) {
-      localStorage.setItem('cont', JSON.stringify(item))
       this.$store.state.categoria = item
       this.$router.push({
         name: 'app-admin-dados-perguntas',

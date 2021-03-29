@@ -16,51 +16,57 @@
             <label label-for="nome_aluno">Nome do Aluno</label>
             <b-form-input
               id="nome_aluno"
+              v-model="nomeAluno"
               placeholder="Nome do Aluno"
             />
           </b-form-group>
         </b-col>
-      </b-row>
-      <!------------- EMAIL DO ALUNO--------------->
-      <b-row>
+        <!------------- EMAIL DO ALUNO--------------->
         <b-col>
           <b-form-group>
             <label label-for="email">E-mail do Aluno</label>
             <b-form-input
               id="email"
+              v-model="emailAluno"
               placeholder="E-mail do Aluno"
             />
           </b-form-group>
         </b-col>
-        <b-col>
+      </b-row>
+      <!------------- SENHA DO ALUNO--------------->
+      <b-row>
+        <b-col md="6">
           <b-form-group>
-            <label label-for="email">Senha</label>
+            <label label-for="senha">Senha</label>
             <b-form-input
-              id="email"
+              id="senha"
+              v-model="senhaAluno"
               placeholder="Senha"
             />
           </b-form-group>
         </b-col>
-      </b-row>
-      <!------------- STATUS DO ALUNO--------------->
-      <b-row>
+
+        <!------------- STATUS DO ALUNO--------------->
         <b-col md="6">
           <b-form-group>
             <label>Selecione o Status</label>
             <v-select
+              v-model="StatusAluno"
               placeholder="Selecione o Status"
               label="text"
+              :options="opcoesStatusAluno"
             />
           </b-form-group>
         </b-col>
+      </b-row>
+      <!------------- 3° LINHA BOTÃO SALVAR--------------->
+      <b-row>
         <b-col
-          md="6"
           class="mt-2"
         >
           <b-button
             variant="gradient-success"
             block
-            @click="Salvar_Dados"
           >
             Salvar Aluno
           </b-button>
@@ -80,7 +86,25 @@ export default {
   },
   data() {
     return {
+      dadosAlunos: {},
+
+      nomeAluno: null,
+      emailAluno: null,
+      senhaAluno: null,
+      StatusAluno: null,
+
+      //  ------------ OPÇÕES ------------   //
+
+      opcoesStatusAluno: [
+        { value: null, text: 'Selecione um Status' },
+        { value: 0, text: 'Inativo' },
+        { value: 1, text: 'Ativo' },
+        { value: 0, text: 'Pendente' },
+      ],
     }
+  },
+  created() {
+    this.dadosAlunos = this.$store.state.infoAluno
   },
 }
 </script>

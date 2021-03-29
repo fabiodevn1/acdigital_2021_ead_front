@@ -6,7 +6,7 @@
       </h6>
     </b-col>
 
-    <b-col md="12">
+    <b-col md="4">
       <b-card-group columns>
 
         <!-- card image top -->

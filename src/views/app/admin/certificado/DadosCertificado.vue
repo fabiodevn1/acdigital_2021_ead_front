@@ -22,7 +22,10 @@
             label="Selecione o Curso"
           >
             <v-select
-              label="title"
+              v-model="selecionadoCurso"
+              :options="opcoesCursos"
+              label="text"
+              placeholder="Selecione o Curso"
             />
           </b-form-group>
         </b-col>
@@ -34,9 +37,13 @@
             label="Selecione o Status do Certificados"
           >
             <v-select
-              label="title"
+              :v-model="selecionadoStatus"
+              :options="opcoesStatusCertificado"
+              label="text"
+              placeholder="Selecione o Status do Certificados"
             />
           </b-form-group>
+          Selected: <strong>{{ selecionadoStatus }}</strong>
         </b-col>
       </b-row>
 
@@ -52,6 +59,7 @@
           >
             <b-form-input
               id="tempo"
+              v-model="tempoCurso"
               placeholder="Tempo total do Curso"
             />
           </b-form-group>
@@ -66,6 +74,7 @@
           >
             <b-form-input
               id="linkCertificado"
+              v-model="linkCertificado"
               placeholder="Link do download do certificado"
             />
           </b-form-group>
@@ -74,12 +83,28 @@
 
       <!--------------------- 3° LINHA BOTÃO SALVAR --------------------->
       <b-row>
-        <b-col class="mt-1">
+        <b-col
+          md="8"
+          class="mt-1"
+        >
           <b-button
             variant="gradient-success"
             block
+            @click="SalvarCertificado()"
           >
             Salvar Certificado
+          </b-button>
+        </b-col>
+        <b-col
+          md="4"
+          class="mt-1"
+        >
+          <b-button
+            variant="gradient-info"
+            block
+            @click="ZerarCampos()"
+          >
+            Limpar Certificado
           </b-button>
         </b-col>
       </b-row>
@@ -92,8 +117,66 @@ import vSelect from 'vue-select'
 
 export default {
   name: 'DadosCertificado',
+
   components: {
     vSelect,
+  },
+  data() {
+    return {
+      id: null,
+      dadosCertificado: {},
+
+      // =========== MODELS =========== //
+      tempoCurso: null,
+      linkCertificado: null,
+      selecionadoCurso: [],
+      selecionadoStatus: [],
+
+      // =========== OPÇÕES =========== //
+      opcoesCursos: [],
+      opcoesStatusCertificado: [
+        { value: null, text: 'Selecione um Status ' },
+        { value: 0, text: 'Status Bloqueado' },
+        { value: 1, text: 'Status Progresso' },
+        { value: 2, text: 'Status Disponivel' },
+      ],
+    }
+  },
+  created() {
+    this.dadosCertificado = this.$store.state.infoCertificado
+  },
+  async mounted() {
+    await this.$http.get('admin/lista_cursos').then(retorna => {
+      this.opcoesCursos = retorna.data.curso
+      localStorage.setItem('listaCursos', JSON.stringify(retorna.data))
+    })
+  },
+  methods: {
+    ZerarCampos() {
+      const obj = {
+        id: this.id,
+        tempo: this.tempoCurso,
+        linkcertificado: this.linkCertificado,
+        id_curso: this.selecionadoCurso.value,
+        status: this.selecionadoStatusCertificado.value,
+      }
+      this.linkcertificado = null
+      this.linkcertificado = null
+      this.linkcertificado = null
+      this.linkcertificado = null
+      return obj
+    },
+    SalvarCertificado() {
+      const obj = this.ZerarCampos()
+      console.log(this.selecionadoStatus)
+      console.log(obj)
+      // if (this.id === null) {
+      //   this.$http.post('admin/certificados', obj).then(retorna => {
+      //     console.log(retorna.data)
+      //   })
+      // }
+    },
+
   },
 }
 </script>
