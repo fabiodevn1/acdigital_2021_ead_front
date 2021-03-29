@@ -106,6 +106,9 @@ export default {
   created() {
     this.dadosAlunos = this.$store.state.infoAluno
   },
+  methods: {
+
+  },
 }
 </script>
 

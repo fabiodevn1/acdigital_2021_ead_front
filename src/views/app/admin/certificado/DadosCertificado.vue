@@ -37,13 +37,12 @@
             label="Selecione o Status do Certificados"
           >
             <v-select
-              :v-model="selecionadoStatus"
-              :options="opcoesStatusCertificado"
+              v-model="selecionandoStatus"
               label="text"
               placeholder="Selecione o Status do Certificados"
+              :options="opcoesStatus"
             />
           </b-form-group>
-          Selected: <strong>{{ selecionadoStatus }}</strong>
         </b-col>
       </b-row>
 
@@ -130,11 +129,11 @@ export default {
       tempoCurso: null,
       linkCertificado: null,
       selecionadoCurso: [],
-      selecionadoStatus: [],
+      selecionandoStatus: [],
 
       // =========== OPÇÕES =========== //
       opcoesCursos: [],
-      opcoesStatusCertificado: [
+      opcoesStatus: [
         { value: null, text: 'Selecione um Status ' },
         { value: 0, text: 'Status Bloqueado' },
         { value: 1, text: 'Status Progresso' },
@@ -158,23 +157,25 @@ export default {
         tempo: this.tempoCurso,
         linkcertificado: this.linkCertificado,
         id_curso: this.selecionadoCurso.value,
-        status: this.selecionadoStatusCertificado.value,
+        status: this.selecionandoStatus.value,
       }
-      this.linkcertificado = null
-      this.linkcertificado = null
-      this.linkcertificado = null
-      this.linkcertificado = null
+      this.tempoCurso = null
+      this.linkCertificado = null
+      this.selecionadoCurso = null
+      this.selecionandoStatus = null
       return obj
     },
     SalvarCertificado() {
       const obj = this.ZerarCampos()
-      console.log(this.selecionadoStatus)
       console.log(obj)
-      // if (this.id === null) {
-      //   this.$http.post('admin/certificados', obj).then(retorna => {
-      //     console.log(retorna.data)
-      //   })
-      // }
+      // if (obj.tempo === null) {
+      //   alert('informe o tempo')
+
+      if (this.id === null) {
+        this.$http.post('admin/certificados', obj).then(retorna => {
+          console.log(retorna.data)
+        })
+      }
     },
 
   },
