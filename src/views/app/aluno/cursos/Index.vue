@@ -12,20 +12,29 @@
           :key="curso.id"
           md="4"
         >
+          <!--###################### IMAGEM DO CURSO ######################-->
           <b-card
             :img-src="require('../../../../assets/images/banner/banner-27.jpg')"
             img-alt="card img"
             img-top
             class="position-static"
           >
+
+            <!--###################### TITULO DO CURSO ######################-->
             <h2>{{ curso.titulo }}</h2>
+
+            <!--###################### DESCRIÇÃO DO CURSO ######################-->
             <b-card-text> {{ curso.descricao | truncate(90) }}</b-card-text>
+
+            <!--###################### TAGS DO CURSO ######################-->
             <b-card-text class="item-company">
               Tags: <b-link class="ml-25">
                 {{ curso.tags }}
               </b-link>
             </b-card-text>
             <b-row>
+
+              <!--###################### ESTRELAS DO CURSO ######################-->
               <b-col
                 md="6"
                 class="item-rating"
@@ -45,12 +54,16 @@
                   </li>
                 </ul>
               </b-col>
+
+              <!--###################### VALOR DO CURSO ######################-->
               <b-col md="6">
                 <h6 class="item-price">
                   R${{ curso.valor }}
                 </h6>
               </b-col>
             </b-row>
+
+            <!--###################### BOTÃO DE COMPRA DO CURSO ######################-->
             <b-button
               variant="light"
               block
