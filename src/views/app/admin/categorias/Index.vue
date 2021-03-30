@@ -82,6 +82,13 @@
                         <feather-icon icon="Trash2Icon" />
                       </b-button>
                     </slot>
+                    <slot v-if="column.label === 'Status'">
+                      <b-badge
+                        :variant="NomeStatus(item).cor"
+                      >
+                        {{ NomeStatus(item).msg }}
+                      </b-badge>
+                    </slot>
                   </td>
                 </tr>
               </tbody>
@@ -133,7 +140,6 @@ export default {
         },
         {
           label: 'Status',
-          name: 'status',
           orderable: true,
         },
         {
@@ -147,6 +153,17 @@ export default {
     this.BuscarDados(this.url)
   },
   methods: {
+    NomeStatus(item) {
+      if (item.status === 0) {
+        return { cor: 'light-danger', msg: 'Inativo' }
+      }
+      if (item.status === 1) {
+        return { cor: 'light-success', msg: 'Ativo' }
+      }
+      if (item.status === 2) {
+        return { cor: 'light-warning', msg: 'Pendente' }
+      } return 'Sem Status'
+    },
     editDados(item) {
       localStorage.setItem('cont', JSON.stringify(item))
       this.$store.state.categoria = item

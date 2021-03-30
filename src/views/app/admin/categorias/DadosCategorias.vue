@@ -10,23 +10,26 @@
       </b-row>
       <b-row class="mt-1">
         <b-col>
+          <!--------------------- TITULO DA CATEGORIA --------------------->
           <b-form-group>
             <label label-for="categoria">Titulo da Categoria</label>
             <b-form-input
               id="categoria"
-              v-model="categoria"
+              v-model="nomeCategoria"
               placeholder="Titulo da Categoria"
             />
           </b-form-group>
         </b-col>
       </b-row>
       <b-row>
+        <!--------------------- DESCRIÇÃO DA CATEGORIA --------------------->
+
         <b-col>
           <b-form-group>
             <label label-for="descrição">Descrição da Categoria</label>
             <b-form-textarea
               id="descrição"
-              v-model="descricao"
+              v-model="descricaoCategoria"
               placeholder="Descrição da Categoria"
               rows="3"
             />
@@ -34,6 +37,7 @@
         </b-col>
       </b-row>
       <b-row>
+        <!--------------------- IMAGEM DA CATEGORIA --------------------->
         <b-col md="6">
           <b-form-group>
             <label>Imagem de Destaque</label>
@@ -43,6 +47,7 @@
             />
           </b-form-group>
         </b-col>
+        <!--------------------- IMAGEM DE CAPA DA CATEGORIA --------------------->
         <b-col md="6">
           <b-form-group>
             <label>Imagem de Capa</label>
@@ -54,6 +59,7 @@
         </b-col>
       </b-row>
       <b-row>
+        <!--------------------- STATUS DA CATEGORIA --------------------->
         <b-col md="6">
           <b-form-group>
             <label>Selecione o Status</label>
@@ -93,17 +99,17 @@ export default {
   data() {
     return {
       dir: 'ltr',
-      categoria: '',
-      descricao: '',
-      destaque: '',
-      capa: '',
+      nomeCategoria: '',
+      descricaoCategoria: '',
+      imagemDestaque: '',
+      imagemCapa: '',
       status: '',
       cor: '',
       ostatus: [
         { value: null, text: 'Por Favor Selecione' },
-        { value: 0, text: 'Desativado' },
+        { value: 0, text: 'Inativo' },
         { value: 1, text: 'Ativo' },
-        { value: 2, text: 'Lixeira' },
+        { value: 2, text: 'Pendente' },
       ],
     }
   },
@@ -111,31 +117,40 @@ export default {
     const Categoria = this.$store.state.categoria
     if (Categoria) {
       this.id = Categoria.id
-      this.categoria = Categoria.titulo
-      this.descricao = Categoria.descricao
+      this.nomeCategoria = Categoria.titulo
+      this.descricaoCategoria = Categoria.descricao
     }
   },
   methods: {
-    Salvar_Dados() {
+    ZerarCampos() {
       const obj = {
         id: this.id,
-        titulo: this.categoria,
-        descricao: this.descricao,
+        titulo: this.nomeCategoria,
+        descricao: this.descricaoCategoria,
         status: this.status.value,
       }
+      this.nomeCategoria = null
+      this.descricaoCategoria = null
+      this.status = null
+      this.imagemDestaque = null
+      this.imagemCapa = null
+      return obj
+    },
+    Salvar_Dados() {
+      const obj = this.ZerarCampos()
       console.log(obj)
       if (this.id === undefined) {
         this.$http.post('admin/categorias', obj).then(resp => {
           this.data = resp.data
         })
+        this.$router.push({ name: 'app-admin-categorias' })
         return
       }
 
-      this.$http.put(`admin/categorias${this.id}`, obj).then(resp => {
+      this.$http.put(`admin/categorias/${this.id}`, obj).then(resp => {
         this.data = resp.data
-        this.$emit('reloadt')
-        console.log('editar')
       })
+      this.$router.push({ name: 'app-admin-categorias' })
     },
   },
 }
