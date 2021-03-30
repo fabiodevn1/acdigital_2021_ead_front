@@ -185,11 +185,11 @@ export default {
       } return 'Sem Status'
     },
     ValorCurso(item) {
-      console.log(item)
       if (item.valor === '0.00') {
         return 'Gratuito'
       } return item.valor
     },
+
     editDados(item) {
       localStorage.setItem('cont', JSON.stringify(item))
       this.$store.state.categoria = item
@@ -200,7 +200,6 @@ export default {
     BuscarDados(url = this.url, options = this.tableProps) {
       this.$http.get(url, { params: options }).then(resp => {
         this.data = resp.data
-        console.log(this.data)
       })
     },
     reloadTable(tableProps) {

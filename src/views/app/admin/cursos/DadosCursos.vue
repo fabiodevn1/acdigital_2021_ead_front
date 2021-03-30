@@ -149,6 +149,7 @@
               v-model="statusCursoSelecionado"
               placeholder="Selecione o Status"
               label="text"
+              :options="opcoesStatusCurso"
             />
           </b-form-group>
         </b-col>
@@ -220,10 +221,24 @@ export default {
       seCursoPrivado: null,
       //= ========================================================================
       opcoesTags: [{ value: null, text: 'Por Favor Selecione' }],
-      opcoesStatusCurso: [{ value: null, text: 'Por Favor Selecione' }],
-      opcoesCursoPrivado: [{ value: null, text: 'Por Favor Selecione' }],
-      opcoesCategorias: [{ value: null, text: 'Por Favor Selecione' }],
+      opcoesStatusCurso: [
+        { value: 0, text: 'Inativo' },
+        { value: 1, text: 'Ativo' },
+        { value: 2, text: 'Rascunho' },
+      ],
+      opcoesCursoPrivado: [
+        { value: 0, text: 'Privado' },
+        { value: 1, text: 'Público' },
+      ],
+      opcoesCategorias: [],
     }
+  },
+  // ########### LISTA DE CATEGORIA ############## //
+  async mounted() {
+    await this.$http.get('admin/lista_cursos').then(retorna => {
+      this.opcoesCategorias = retorna.data.categoria
+      localStorage.setItem('listaCursos', JSON.stringify(retorna.data))
+    })
   },
   methods: {
     ZerarCampos() {
@@ -233,12 +248,13 @@ export default {
         descricao: this.descricaoCurso,
         imagem: this.imagemDestaque,
         categorias: this.categoriasSelecionadas,
-        tags: this.tagsSelecionadas,
+        tags: this.tagsSelecionadas.value,
         valor: this.valorCurso,
         valor_promo: this.valorPromocional,
         status: this.statusCursoSelecionado,
-        privado: this.seCursoPrivado,
+        privado: this.seCursoPrivado.value,
       }
+      console.log(obj)
       this.nomeCurso = null
       this.descricaoCurso = null
       this.imagemDestaque = null
@@ -256,12 +272,14 @@ export default {
         this.$http.post('admin/cursos', obj).then(resp => {
           console.log(resp.data)
         })
+        // this.$router.push({ name: 'app-admin-cursos' })
         return
       }
-      // console.log('passou')
       this.$http.put(`admin/cursos/${this.id}`, obj).then(resp => {
         this.data = resp.data
       })
+
+      // this.$router.push({ name: 'app-admin-cursos' })
     },
   },
 }
