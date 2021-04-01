@@ -67,6 +67,7 @@
           <b-button
             variant="gradient-success"
             block
+            @click="SalvarAluno"
           >
             Salvar Aluno
           </b-button>
@@ -107,8 +108,35 @@ export default {
     this.dadosAlunos = this.$store.state.infoAluno
   },
   methods: {
-
+    ZerarCampos() {
+      const obj = {
+        name: this.nomeAluno,
+        email: this.emailAluno,
+        password: this.senhaAluno,
+        ativo: this.StatusAluno.value,
+      }
+      this.nomeAluno = null
+      this.emailAluno = null
+      this.senhaAluno = null
+      this.StatusAluno = null
+      return obj
+    },
+    SalvarAluno() {
+      const obj = this.ZerarCampos()
+      console.log(obj)
+      if (this.id === null) {
+        this.$http.post('auth/register', obj).then(resp => {
+          console.log(resp.data)
+        })
+        return
+      }
+      console.log('passou')
+      this.$http.post('auth/register', obj).then(resp => {
+        this.data = resp.data
+      })
+    },
   },
+
 }
 </script>
 
