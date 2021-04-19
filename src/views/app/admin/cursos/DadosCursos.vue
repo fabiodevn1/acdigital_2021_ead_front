@@ -132,9 +132,10 @@
         <b-col md="4">
           <b-form-group>
             <label>Selecione o Peréodo da Promoção</label>
-            <b-form-datepicker
-              id="example-datepicker"
-              class="mb-1"
+            <flat-pickr
+              v-model="periodoPromocional"
+              class="form-control"
+              :config="{ mode: 'range', dateFormat: 'Y-m-d', locale: Portuguese, altFormat: 'd/m/Y', altInput: true }"
             />
           </b-form-group>
         </b-col>
@@ -169,7 +170,6 @@
       <b-row>
         <b-col
           md="8"
-          class="mt-1"
         >
           <b-button
             variant="gradient-success"
@@ -181,7 +181,6 @@
         </b-col>
         <b-col
           md="4"
-          class="mt-1"
         >
           <b-button
             variant="gradient-warning"
@@ -198,27 +197,30 @@
 
 <script>
 import vSelect from 'vue-select'
+import flatPickr from 'vue-flatpickr-component'
 
 export default {
   name: 'DadosCursos',
   components: {
     vSelect,
+    flatPickr,
   },
   directives: {
   },
   data() {
     return {
       id: null,
-      nomeCurso: null,
-      descricaoCurso: null,
-      imagemDestaque: null,
-      categoriasSelecionadas: null,
-      tagsSelecionadas: null,
+      nomeCurso: '',
+      descricaoCurso: '',
+      imagemDestaque: '',
+      categoriasSelecionadas: '',
+      tagsSelecionadas: '',
+      periodoPromocional: '',
       money: [],
-      valorCurso: null,
-      valorPromocional: null,
-      statusCursoSelecionado: null,
-      seCursoPrivado: null,
+      valorCurso: '',
+      valorPromocional: '',
+      statusCursoSelecionado: '',
+      seCursoPrivado: '',
       //= ========================================================================
       opcoesTags: [{ value: null, text: 'Por Favor Selecione' }],
       opcoesStatusCurso: [
@@ -241,6 +243,13 @@ export default {
     })
   },
   methods: {
+    Notificação(cor, msg) {
+      this.$bvToast.toast(msg, {
+        title: 'ALERTA',
+        variant: cor,
+        solid: true,
+      })
+    },
     ZerarCampos() {
       const obj = {
         id: this.id,
@@ -267,19 +276,23 @@ export default {
       return obj
     },
     SalvarCurso() {
+      if (this.nomeCurso === '' || this.descricaoCurso === '' || this.imagemDestaque === '' || this.categoriasSelecionadas === ''
+          || this.valorCurso === '' || this.statusCursoSelecionado === '' || this.seCursoPrivado === '') {
+        this.Notificação('danger', 'Preenche os campos obriggatórios')
+        return
+      }
       const obj = this.ZerarCampos()
       if (this.id === null) {
         this.$http.post('admin/cursos', obj).then(resp => {
           console.log(resp.data)
         })
-        // this.$router.push({ name: 'app-admin-cursos' })
+        this.$router.push({ name: 'app-admin-cursos' })
         return
       }
       this.$http.put(`admin/cursos/${this.id}`, obj).then(resp => {
         this.data = resp.data
       })
-
-      // this.$router.push({ name: 'app-admin-cursos' })
+      this.$router.push({ name: 'app-admin-cursos' })
     },
   },
 }
@@ -287,4 +300,7 @@ export default {
 
 <style scoped>
 
+</style>
+<style lang="scss">
+@import '@core/scss/vue/libs/vue-flatpicker.scss';
 </style>
