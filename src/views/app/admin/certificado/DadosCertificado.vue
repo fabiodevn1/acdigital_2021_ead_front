@@ -126,8 +126,8 @@ export default {
       dadosCertificado: {},
 
       // =========== MODELS =========== //
-      tempoCurso: null,
-      linkCertificado: null,
+      tempoCurso: '',
+      linkCertificado: '',
       selecionadoCurso: [],
       selecionandoStatus: [],
 
@@ -151,6 +151,13 @@ export default {
     })
   },
   methods: {
+    Notificação(cor, msg) {
+      this.$bvToast.toast(msg, {
+        title: 'ALERTA',
+        variant: cor,
+        solid: true,
+      })
+    },
     ZerarCampos() {
       const obj = {
         id: this.id,
@@ -159,13 +166,21 @@ export default {
         id_curso: this.selecionadoCurso.value,
         status: this.selecionandoStatus.value,
       }
-      this.tempoCurso = null
-      this.linkCertificado = null
-      this.selecionadoCurso = null
-      this.selecionandoStatus = null
+      this.tempoCurso = ''
+      this.linkCertificado = ''
+      this.selecionadoCurso = ''
+      this.selecionandoStatus = ''
       return obj
     },
     SalvarCertificado() {
+      if (this.selecionadoCurso === '' || this.selecionandoStatus === '' || this.tempoCurso === '' || this.linkCertificado === '') {
+        this.Notificação('danger', 'Preencha os campos obrigatórios')
+        return
+      }
+      // if (this.selecionadoCurso !== '' || this.selecionandoStatus !== '' || this.tempoCurso !== '' || this.linkCertificado !== '') {
+      //   this.Notificação('success', 'Certificado Criado Com Sucesso')
+      //   return
+      // }
       const obj = this.ZerarCampos()
       console.log(obj)
       // if (obj.tempo === null) {
@@ -175,7 +190,14 @@ export default {
         this.$http.post('admin/certificados', obj).then(retorna => {
           console.log(retorna.data)
         })
+        this.$router.push({ name: 'app-admin-certificado' })
       }
+      if (this.id !== null) {
+        this.$http.post('admin/certificados', obj).then(retorna => {
+          console.log(retorna.data)
+        })
+      }
+      this.$router.push({ name: 'app-admin-certificado' })
     },
 
   },

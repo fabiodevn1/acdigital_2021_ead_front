@@ -60,6 +60,12 @@
                       :comp="column.component"
                       :classes="column.classes"
                     />
+                    <slot v-if="column.label === 'Avatar'">
+                      <b-avatar
+                        size="50px"
+                        :src="require('@/assets/images/portrait/small/avatar-s-20.jpg')"
+                      />
+                    </slot>
                     <slot v-if="column.label === 'Ações'">
                       <!--                      <b-button-->
                       <!--                        v-b-toggle.sidebar-invoice-add-new-customer-->
@@ -128,6 +134,11 @@ export default {
         {
           label: '#',
           name: 'id',
+          orderable: true,
+        },
+        {
+          label: 'Avatar',
+          // name: 'usuario.name',
           orderable: true,
         },
         {
