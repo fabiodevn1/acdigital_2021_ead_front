@@ -16,7 +16,7 @@
           <b-form-group>
             <label
               label-for="cursos"
-            >Titulo do Curso</label>
+            >Titulo do Curso *Obrigatório</label>
             <b-form-input
               id="cursos"
               v-model="nomeCurso"
@@ -32,7 +32,7 @@
           <b-form-group>
             <label
               label-for="descrição"
-            >Descrição do Curso</label>
+            >Descrição do Curso *Obrigatório</label>
             <b-form-textarea
               id="descrição"
               v-model="descricaoCurso"
@@ -59,12 +59,11 @@
         <!------------- CATEGORIA--------------->
         <b-col md="4">
           <b-form-group>
-            <label>Selecione a Categoria</label>
+            <label>Selecione a Categoria  *Obrigatório</label>
             <v-select
               v-model="categoriasSelecionadas"
               placeholder="Selecione a Categoria"
               label="text"
-              multiple
               :options="opcoesCategorias"
             />
           </b-form-group>
@@ -76,10 +75,8 @@
             <label>Selecione as Tags</label>
             <v-select
               v-model="tagsSelecionadas"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              placeholder="Selecione as Tags"
+              placeholder="Selecione a Categoria"
               label="text"
-              multiple
               :options="opcoesTags"
             />
           </b-form-group>
@@ -135,7 +132,7 @@
             <flat-pickr
               v-model="periodoPromocional"
               class="form-control"
-              :config="{ mode: 'range', dateFormat: 'Y-m-d', locale: Portuguese, altFormat: 'd/m/Y', altInput: true }"
+              :config="{ mode: 'range', dateFormat: 'Y-m-d', altFormat: 'd/m/Y', altInput: true }"
             />
           </b-form-group>
         </b-col>
@@ -145,7 +142,7 @@
       <b-row>
         <b-col md="6">
           <b-form-group>
-            <label>Selecione o Status</label>
+            <label>Selecione o Status *Obrigatório</label>
             <v-select
               v-model="statusCursoSelecionado"
               placeholder="Selecione o Status"
@@ -156,7 +153,7 @@
         </b-col>
         <b-col md="6">
           <b-form-group>
-            <label>Selecione Privado</label>
+            <label>Selecione Privado *Obrigatório</label>
             <v-select
               v-model="seCursoPrivado"
               placeholder="Selecione Privado"
@@ -169,7 +166,7 @@
 
       <b-row>
         <b-col
-          md="8"
+          md="12"
         >
           <b-button
             variant="gradient-success"
@@ -177,17 +174,6 @@
             @click="SalvarCurso"
           >
             Cadastrar Curso
-          </b-button>
-        </b-col>
-        <b-col
-          md="4"
-        >
-          <b-button
-            variant="gradient-warning"
-            block
-            @click="ZerarCampos"
-          >
-            Limpar
           </b-button>
         </b-col>
       </b-row>
@@ -210,19 +196,23 @@ export default {
   data() {
     return {
       id: null,
-      nomeCurso: '',
-      descricaoCurso: '',
-      imagemDestaque: '',
+      nomeCurso: null,
+      descricaoCurso: null,
+      imagemDestaque: null,
       categoriasSelecionadas: '',
-      tagsSelecionadas: '',
-      periodoPromocional: '',
+      tagsSelecionadas: [],
+      periodoPromocional: null,
       money: [],
-      valorCurso: '',
-      valorPromocional: '',
-      statusCursoSelecionado: '',
-      seCursoPrivado: '',
+      valorCurso: null,
+      valorPromocional: null,
+      statusCursoSelecionado: [],
+      seCursoPrivado: [],
       //= ========================================================================
-      opcoesTags: [{ value: null, text: 'Por Favor Selecione' }],
+      opcoesTags: [
+        { id: 1, text: 'TAG 1' },
+        { id: 2, text: 'TAG 2' },
+        { id: 3, text: 'TAG 3' },
+      ],
       opcoesStatusCurso: [
         { value: 0, text: 'Inativo' },
         { value: 1, text: 'Ativo' },
@@ -256,18 +246,19 @@ export default {
         titulo: this.nomeCurso,
         descricao: this.descricaoCurso,
         imagem: this.imagemDestaque,
-        categorias: this.categoriasSelecionadas,
-        tags: this.tagsSelecionadas.value,
+        id_categoria: this.categoriasSelecionadas?.value,
+        tags: this.tagsSelecionadas.id,
         valor: this.valorCurso,
         valor_promo: this.valorPromocional,
-        status: this.statusCursoSelecionado,
+        status: this.statusCursoSelecionado.value,
         privado: this.seCursoPrivado.value,
+        data_promo: this.periodoPromocional,
       }
-      console.log(obj)
+      this.id = null
       this.nomeCurso = null
       this.descricaoCurso = null
       this.imagemDestaque = null
-      this.categoriasSelecionadas = null
+      this.categoriasSelecionadas = []
       this.tagsSelecionadas = null
       this.valorCurso = null
       this.valorPromocional = null
@@ -276,21 +267,26 @@ export default {
       return obj
     },
     SalvarCurso() {
-      if (this.nomeCurso === '' || this.descricaoCurso === '' || this.imagemDestaque === '' || this.categoriasSelecionadas === ''
-          || this.valorCurso === '' || this.statusCursoSelecionado === '' || this.seCursoPrivado === '') {
-        this.Notificação('danger', 'Preenche os campos obriggatórios')
+      // FUNÇÃO DE CAMPO OBRIGATÓRIO
+      if (this.nomeCurso === null || this.descricaoCurso === null || this.categoriasSelecionadas === ''
+          || this.statusCursoSelecionado.value === undefined || this.seCursoPrivado.value === undefined) {
+        this.Notificação('danger', 'Preenche os campos obrigatórios')
         return
       }
       const obj = this.ZerarCampos()
+      console.log(obj)
       if (this.id === null) {
         this.$http.post('admin/cursos', obj).then(resp => {
+          this.data = resp.data
           console.log(resp.data)
+          this.Notificação('success', 'Curso criado com Sucesso')
         })
         this.$router.push({ name: 'app-admin-cursos' })
         return
       }
       this.$http.put(`admin/cursos/${this.id}`, obj).then(resp => {
         this.data = resp.data
+        this.Notificação('success', 'Curso editado com Sucesso')
       })
       this.$router.push({ name: 'app-admin-cursos' })
     },

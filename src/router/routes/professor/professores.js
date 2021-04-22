@@ -24,17 +24,17 @@ export default [
   },
 
   // ---------------------- AULAS ------------------------------
-
-  {
-    path: '/app/professor/cursos',
-    name: 'app-professor-cursos',
-    component: () => import('@/views/app/professor/cursos/Index'),
-  },
-  {
-    path: '/app/professor/cursos/criar',
-    name: 'app-professor-cursos-criar',
-    component: () => import('@/views/app/professor/cursos/Index'),
-  },
+  //
+  // {
+  //   path: '/app/professor/cursos',
+  //   name: 'app-professor-cursos',
+  //   component: () => import('@/views/app/professor/cursos/Index'),
+  // },
+  // {
+  //   path: '/app/professor/cursos/criar',
+  //   name: 'app-professor-cursos-criar',
+  //   component: () => import('@/views/app/professor/cursos/Index'),
+  // },
 
   // ########################################################## //
   // #################        SUPORTE         ################# //

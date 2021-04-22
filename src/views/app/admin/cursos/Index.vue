@@ -105,6 +105,13 @@
                     <slot v-if="column.label == 'Valor'">
                       R$ {{ ValorCurso(item) }}
                     </slot>
+                    <slot v-if="column.label === 'Img'">
+                      <b-avatar
+                        size="4
+                        0px"
+                        :src="require('@/assets/images/portrait/small/avatar-s-20.jpg')"
+                      />
+                    </slot>
                   </td>
                 </tr>
               </tbody>
@@ -140,8 +147,7 @@ export default {
       },
       columns: [
         {
-          label: '#',
-          name: 'id',
+          label: 'Img',
           orderable: true,
         },
         {
