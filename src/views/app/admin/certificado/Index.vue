@@ -78,12 +78,11 @@
                       <!--                      > Gerenciar Seção-->
                       <!--                      </b-button>-->
                       <b-button
-                        v-b-toggle.sidebar-invoice-add-new-customer
                         v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                         variant="outline-primary"
                         size="sm"
                         class="btn-icon rounded-circle"
-                        @click="EditarDados(item)"
+                        @click="VerDocumento(dados)"
                       >
                         <feather-icon icon="EditIcon" />
                       </b-button>
@@ -143,17 +142,17 @@ export default {
         },
         {
           label: 'Aluno',
-          name: 'usuario.name',
+          // name: 'usuario.name',
           orderable: true,
         },
         {
           label: 'Email',
-          name: 'usuario.email',
+          // name: 'usuario.email',
           orderable: true,
         },
         {
           label: 'Curso',
-          name: 'curso.titulo',
+          // name: 'curso.titulo',
           orderable: true,
         },
         {
@@ -170,16 +169,35 @@ export default {
   },
   created() {
     this.BuscarDados(this.url)
+    this.dados = this.$store.state.item
   },
   methods: {
+    VerDocumento(dados) {
+      this.$store.state.item = dados
+      console.log(dados)
+      this.$router.push({
+        name: 'app-admin-dados-categorias',
+        params: {
+          id: dados.id,
+        },
+      })
+      console.log('aqui 1')
+    },
     EditarDados(item) {
       this.$store.state.infoCertificado = item
-      this.$router.push({ name: 'app-admin-dados-certificado' })
+      this.$router.push({ name: 'app-admin-dados-categorias' })
+    },
+    editItem(item) {
+      this.$router.push({
+        name: 'app-admin-dados-certificado',
+        params: {
+          id: item.id,
+        },
+      })
     },
     BuscarDados(url = this.url, options = this.tableProps) {
       this.$http.get(url, { params: options }).then(resp => {
         this.data = resp.data
-        console.log(this.data)
       })
     },
     reloadTable(tableProps) {
