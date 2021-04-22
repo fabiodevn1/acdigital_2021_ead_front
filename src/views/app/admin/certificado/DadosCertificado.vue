@@ -143,6 +143,8 @@ export default {
   },
   created() {
     this.dadosCertificado = this.$store.state.infoCertificado
+    this.dados = this.$store.state.item
+    console.log(this.dados)
   },
   async mounted() {
     await this.$http.get('admin/lista_cursos').then(retorna => {
