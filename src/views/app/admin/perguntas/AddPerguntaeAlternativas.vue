@@ -98,17 +98,19 @@
             </h5>
             <small class="text-muted">Adicione as alternativas e selecione a(s) correta(s) </small>
           </b-col>
+        </b-row>
+        <b-row
+          v-for="alterna in alternativas"
+          :key="alterna.id"
+        >
           <!--          -->
-          <b-col md="10">
+          <b-col md="2">
             <b-form-group>
-              <b-input-group>
-                <b-input-group-prepend is-text>
-                  <b-form-checkbox
-                    name="checkbox-input"
-                  />
-                </b-input-group-prepend>
-                <b-form-input placeholder="Escreva uma resposta de opção ..." />
-              </b-input-group>
+              <b-form-checkbox
+                v-model="selected"
+                value="B"
+              >
+                {{ selected }}</b-form-checkbox>
             </b-form-group>
           </b-col>
           <b-col md="2">
@@ -116,6 +118,7 @@
               v-ripple.400="'rgba(113, 102, 240, 0.15)'"
               variant="gradient-success"
               class="btn-icon rounded-circle"
+              @click="addLinha"
             >
               <feather-icon icon="PlusIcon" />
             </b-button>
@@ -161,31 +164,18 @@ export default {
   },
   data() {
     return {
-      selectedContry: 'select_value',
-      selectedLanguage: 'nothing_selected',
-      countryName: [
-        { value: 'select_value', text: 'Select Value' },
-        { value: 'Russia', text: 'Russia' },
-        { value: 'Canada', text: 'Canada' },
-        { value: 'China', text: 'China' },
-        { value: 'United States', text: 'United States' },
-        { value: 'Brazil', text: 'Brazil' },
-        { value: 'Australia', text: 'Australia' },
-        { value: 'India', text: 'India' },
-      ],
-      languageName: [
-        { value: 'nothing_selected', text: 'Nothing Selected' },
-        { value: 'English', text: 'English' },
-        { value: 'Chinese', text: 'Mandarin Chinese' },
-        { value: 'Hindi', text: 'Hindi' },
-        { value: 'Spanish', text: 'Spanish' },
-        { value: 'Arabic', text: 'Arabic' },
-        { value: 'Malay', text: 'Malay' },
-        { value: 'Russian', text: 'Russian' },
-      ],
+      alternativas: [{
+        id: '', alternativa: '', resposta: '',
+      }],
+
     }
   },
   methods: {
+    addLinha() {
+      this.alternativas.push({
+        id: '', alternativa: '', resposta: '',
+      })
+    },
     formSubmitted() {
       this.$toast({
         component: ToastificationContent,

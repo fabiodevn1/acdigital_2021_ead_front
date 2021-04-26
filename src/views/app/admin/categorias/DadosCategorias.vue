@@ -42,6 +42,7 @@
           <b-form-group>
             <label>Imagem de Destaque</label>
             <b-form-file
+              v-model="imagemDestaque"
               placeholder="Escolha um arquivo ou solte-o aqui ..."
               drop-placeholder="Solte o arquivo aqui ..."
             />
@@ -52,6 +53,7 @@
           <b-form-group>
             <label>Imagem de Capa</label>
             <b-form-file
+              v-model="imagemCapa"
               placeholder="Escolha um arquivo ou solte-o aqui ..."
               drop-placeholder="Solte o arquivo aqui ..."
             />
@@ -98,15 +100,15 @@ export default {
   },
   data() {
     return {
+      id: null,
       dir: 'ltr',
-      nomeCategoria: '',
-      descricaoCategoria: '',
+      nomeCategoria: null,
+      descricaoCategoria: null,
       imagemDestaque: '',
       imagemCapa: '',
       status: '',
       cor: '',
       ostatus: [
-        { value: null, text: 'Por Favor Selecione' },
         { value: 0, text: 'Inativo' },
         { value: 1, text: 'Ativo' },
         { value: 2, text: 'Pendente' },
@@ -127,21 +129,34 @@ export default {
         id: this.id,
         titulo: this.nomeCategoria,
         descricao: this.descricaoCategoria,
+        imagem: this.imagemDestaque.name,
+        imagem_capa: this.imagemCapa.name,
         status: this.status.value,
       }
       this.nomeCategoria = null
       this.descricaoCategoria = null
-      this.status = null
-      this.imagemDestaque = null
-      this.imagemCapa = null
+      this.status = ''
+      this.imagemDestaque = ''
+      this.imagemCapa = ''
       return obj
     },
+    Alerta(cor, msg) {
+      this.$bvToast.toast(msg, {
+        title: 'Alerta',
+        variant: cor,
+        solid: true,
+      })
+    },
     Salvar_Dados() {
+      if (this.nomeCategoria === null || this.status.value === undefined) {
+        this.Alerta('danger', 'Preencha os campos obrigatórios')
+        return
+      }
       const obj = this.ZerarCampos()
-      console.log(obj)
-      if (this.id === undefined) {
+      if (this.id === null) {
         this.$http.post('admin/categorias', obj).then(resp => {
           this.data = resp.data
+          console.log('novo')
         })
         this.$router.push({ name: 'app-admin-categorias' })
         return
@@ -149,6 +164,7 @@ export default {
 
       this.$http.put(`admin/categorias/${this.id}`, obj).then(resp => {
         this.data = resp.data
+        console.log('editar')
       })
       this.$router.push({ name: 'app-admin-categorias' })
     },

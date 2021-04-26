@@ -60,23 +60,7 @@
                       :comp="column.component"
                       :classes="column.classes"
                     />
-                    <slot v-if="column.label === 'Avatar'">
-                      <b-avatar
-                        size="50px"
-                        :src="require('@/assets/images/portrait/small/avatar-s-20.jpg')"
-                      />
-                    </slot>
                     <slot v-if="column.label === 'Ações'">
-                      <!--                      <b-button-->
-                      <!--                        v-b-toggle.sidebar-invoice-add-new-customer-->
-                      <!--                        v-ripple.400="'rgba(113, 102, 240, 0.15)'"-->
-                      <!--                        variant="outline-primary"-->
-                      <!--                        size="sm"-->
-                      <!--                        pill-->
-
-                      <!--                        @click="editItem(item)"-->
-                      <!--                      > Gerenciar Seção-->
-                      <!--                      </b-button>-->
                       <b-button
                         v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                         variant="outline-primary"
@@ -95,6 +79,12 @@
                       >
                         <feather-icon icon="Trash2Icon" />
                       </b-button>
+                    </slot>
+                    <slot v-if="column.label === 'IMG'">
+                      <b-avatar
+                        size="40px"
+                        :src="require('@/assets/images/portrait/small/avatar-s-20.jpg')"
+                      />
                     </slot>
                   </td>
                 </tr>
@@ -136,28 +126,19 @@ export default {
           orderable: true,
         },
         {
-          label: 'Avatar',
-          // name: 'usuario.name',
-          orderable: true,
-        },
-        {
-          label: 'Aluno',
-          // name: 'usuario.name',
-          orderable: true,
-        },
-        {
-          label: 'Email',
-          // name: 'usuario.email',
+          label: 'IMG',
           orderable: true,
         },
         {
           label: 'Curso',
-          // name: 'curso.titulo',
+          orderable: true,
+        },
+        {
+          label: 'Duração',
           orderable: true,
         },
         {
           label: 'Status',
-          name: 'usuario.ativo',
           orderable: true,
         },
         {

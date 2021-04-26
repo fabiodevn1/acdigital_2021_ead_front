@@ -32,7 +32,8 @@ export default [
   {
     path: '/admin/dados/cursos',
     name: 'app-admin-dados-cursos',
-    component: () => import('@/views/app/admin/cursos/DadosCursos.vue'),
+    component: () => import('@/views/app/admin/cursos/DadosCriarCurso.vue'),
+    // component: () => import('@/views/app/admin/cursos/DadosCursos.vue'),
   },
 
   // ########################################################## //

@@ -45,7 +45,7 @@
 
       <b-row>
         <!------------- IMAGEM DESTAQUE--------------->
-        <b-col md="5">
+        <b-col md="4">
           <b-form-group>
             <label>Imagem de Destaque</label>
             <b-form-file
@@ -70,14 +70,16 @@
         </b-col>
 
         <!-------------TAGS--------------->
-        <b-col md="3">
+        <b-col md="4">
           <b-form-group>
             <label>Selecione as Tags</label>
-            <v-select
-              v-model="tagsSelecionadas"
-              placeholder="Selecione a Categoria"
-              label="text"
-              :options="opcoesTags"
+            <b-form-tags
+              v-model="tags"
+              input-id="tags-state-event"
+              :tag-validator="validator"
+              placeholder="Insira as tags (3 a 5 caracteres)"
+              separator=" "
+              @tag-state="onTagState"
             />
           </b-form-group>
         </b-col>
@@ -195,6 +197,10 @@ export default {
   },
   data() {
     return {
+      tags: [],
+      validTags: [],
+      invalidTags: [],
+      duplicateTags: [],
       id: null,
       nomeCurso: null,
       descricaoCurso: null,
@@ -233,6 +239,14 @@ export default {
     })
   },
   methods: {
+    onTagState(valid, invalid, duplicate) {
+      this.validTags = valid
+      this.invalidTags = invalid
+      this.duplicateTags = duplicate
+    },
+    validator(tag) {
+      return tag.length > 2 && tag.length < 6
+    },
     Notificação(cor, msg) {
       this.$bvToast.toast(msg, {
         title: 'ALERTA',
