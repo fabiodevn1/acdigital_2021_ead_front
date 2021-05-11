@@ -11,28 +11,9 @@
           <b-card-body>
             <b-row>
               <b-col
-                cols="12"
-                xl="9"
                 md="8"
               >
-                <h2>Lista de Perguntas</h2>
-              </b-col>
-              <b-col
-                cols="12"
-                xl="3"
-                md="4"
-              >
-                <b-button
-                  v-b-toggle.sidebar-invoice-add-new-customer
-                  v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                  variant="outline-primary"
-                  class="mb-75"
-
-                  fixed
-                  block
-                  @click="editDados('')"
-                > Nova Pergunta
-                </b-button>
+                <h2>Lista das Liçoes dos Cursos</h2>
               </b-col>
             </b-row>
             <data-table
@@ -62,16 +43,6 @@
                       :classes="column.classes"
                     />
                     <slot v-if="column.label === 'Ações'">
-                      <!--                      <b-button-->
-                      <!--                        v-b-toggle.sidebar-invoice-add-new-customer-->
-                      <!--                        v-ripple.400="'rgba(113, 102, 240, 0.15)'"-->
-                      <!--                        variant="outline-primary"-->
-                      <!--                        size="sm"-->
-                      <!--                        pill-->
-
-                      <!--                        @click="editItem(item)"-->
-                      <!--                      > Gerenciar Seção-->
-                      <!--                      </b-button>-->
                       <b-button
                         v-b-toggle.sidebar-invoice-add-new-customer
                         v-ripple.400="'rgba(113, 102, 240, 0.15)'"
@@ -82,15 +53,16 @@
                       >
                         <feather-icon icon="EditIcon" />
                       </b-button>
-                      <b-button
-                        v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                        variant="outline-danger"
-                        size="sm"
-                        class="btn-icon rounded-circle"
-                        @click="DeletarDados(item)"
+                    </slot>
+                    <slot v-if="column.label === 'Curso'">
+                      {{ item.aulas.titulo| truncate(35) }}
+                    </slot>
+                    <slot v-if="column.label === 'Pontos'">
+                      <b-avatar
+                        variant="light-success"
                       >
-                        <feather-icon icon="Trash2Icon" />
-                      </b-button>
+                        {{ item.pontos }}
+                      </b-avatar>
                     </slot>
                   </td>
                 </tr>
@@ -128,18 +100,21 @@ export default {
       },
       columns: [
         {
-          label: 'Titúlo',
-          name: 'titulo',
+          label: '#',
+          name: 'id',
           orderable: true,
         },
         {
-          label: 'Pontos',
+          label: 'Curso',
+          orderable: true,
+        },
+        {
+          label: 'N° Lições',
           name: 'pontos',
           orderable: true,
         },
         {
-          label: 'Aula',
-          name: 'aulas.titulo',
+          label: 'Pontos',
           orderable: true,
         },
         {

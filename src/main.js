@@ -11,6 +11,7 @@ import Vue2Filters from 'vue2-filters'
 import { VueMaskFilter } from 'v-mask'
 import { Datetime } from 'vue-datetime'
 import Multiselect from 'vue-multiselect'
+import vSelect from 'vue-select'
 
 import money from 'v-money'
 import VueGoogleCharts from 'vue-google-charts'
@@ -36,6 +37,8 @@ import '@/libs/vue-select'
 import '@/libs/tour'
 // Axios Mock Adapter
 import '@/@fake-db/db'
+
+Vue.component('v-select', vSelect)
 
 Vue.use(VueGoogleCharts)
 

@@ -29,4 +29,19 @@ export default [
     name: 'app-aluno-suporte',
     component: () => import('@/views/app/aluno/suporte/Index'),
   },
+
+  // ----------------------- VER CURSO -----------------------
+  {
+    path: '/app/aluno/ver/curso',
+    name: 'app-aluno-ver-curso',
+    component: () => import('@/views/app/aluno/cursos/IniciarCurso/MostrarCurso.vue'),
+  },
+
+
+  // ----------------------- VER AULA -----------------------
+  {
+    path: '/app/aluno/ver/aula',
+    name: 'app-aluno-ver-aula',
+    component: () => import('@/views/app/aluno/cursos/IniciarCurso/VerAula.vue'),
+  },
 ]

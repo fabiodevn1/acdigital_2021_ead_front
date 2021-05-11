@@ -63,11 +63,11 @@ export default [
   {
     path: '/admin/dados/suporte',
     name: 'app-admin-dados-suporte',
-    component: () => import('@/views/app/admin/suporte/Index.vue'),
+    component: () => import('@/views/app/admin/suporte/DadosSuporte.vue'),
   },
 
   // ########################################################## //
-  // #################        SUPORTE         ################# //
+  // #################        CERTIFICADO         ################# //
   // ########################################################## //
   {
     path: '/admin/certificado',

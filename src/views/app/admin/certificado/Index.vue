@@ -166,7 +166,7 @@ export default {
     },
     EditarDados(item) {
       this.$store.state.infoCertificado = item
-      this.$router.push({ name: 'app-admin-dados-categorias' })
+      this.$router.push({ name: 'app-admin-dados-certificado' })
     },
     editItem(item) {
       this.$router.push({

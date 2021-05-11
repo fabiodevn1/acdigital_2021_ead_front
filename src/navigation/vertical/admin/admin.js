@@ -45,7 +45,7 @@ export default [
     action: 'admin',
   },
   {
-    title: 'perguntas2',
+    title: 'licoes',
     icon: 'SettingsIcon',
     route: 'app-admin-perguntas',
     action: 'admin',

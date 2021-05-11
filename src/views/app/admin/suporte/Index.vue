@@ -27,9 +27,10 @@
                   v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                   variant="outline-primary"
                   class="mb-75"
-
                   fixed
+
                   block
+                  @click="$router.push({name: 'app-admin-dados-suporte'})"
                 > Novo Suporte
                 </b-button>
               </b-col>
@@ -169,7 +170,6 @@ export default {
     BuscarDados(url = this.url, options = this.tableProps) {
       this.$http.get(url, { params: options }).then(resp => {
         this.data = resp.data
-        console.log(this.data)
       })
     },
     reloadTable(tableProps) {
